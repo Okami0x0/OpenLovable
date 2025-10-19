@@ -19,25 +19,14 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Code, Eye, AlertTriangle, MessageSquare, Cog } from "lucide-react";
+import { Code, Eye, AlertTriangle, MessageSquare, Cog, Loader2 } from "lucide-react";
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import { LivePreview } from "@/components/LivePreview";
 import { ChatInput } from "@/components/ChatInput";
+import { useEffect, useState } from "react";
 
-// This component is correct and has no issues.
-const MissingPromptNotice = () => (
-  <div className="flex flex-col items-center justify-center h-screen text-center p-4">
-    <AlertTriangle className="w-12 h-12 text-yellow-500 mb-4" />
-    <h2 className="text-xl font-semibold mb-2">No Initial Prompt Found</h2>
-    <p className="text-muted-foreground max-w-md">
-      This project space is ready, but the AI agent needs an initial prompt to start building.
-    </p>
-    <p className="text-muted-foreground max-w-md mt-2">
-      Please start from the homepage to create a new project with a prompt.
-    </p>
-  </div>
-);
+
 
 // This component is correct and has no issues.
 const AgentMessageBlock = ({ message }: { message: AgentMessage }) => {
@@ -62,6 +51,9 @@ const EditorPage = () => {
   // Get the prompt passed via in-memory state. This is less reliable (gone on refresh).
   const initialPrompt = location.state?.prompt || null;
 
+  // State to track if we're loading project data
+  const [isLoading, setIsLoading] = useState(false);
+
   // Subscribe to the state from our Zustand store. This part is correct.
   const messages = useProjectStore((state) => state.messages);
   const filesMap = useProjectStore((state) => state.files);
@@ -74,9 +66,16 @@ const EditorPage = () => {
   // The hook will now have everything it needs to start the stream.
   useAgentStream(initialPrompt, projectId);
 
-  if (!initialPrompt) {
-    return <MissingPromptNotice />;
-  }
+  useEffect(() => {
+    // If we have a projectId but no initialPrompt, we're accessing an existing project
+    if (!initialPrompt && projectId) {
+      setIsLoading(false); // For now, just set loading to false
+      // In the future, we could fetch existing project data here
+    }
+  }, [initialPrompt, projectId]);
+
+  // When there's no initial prompt but we have a project ID, we're not blocked anymore
+  // We allow the UI to render and the user can continue working
 
   const handleFollowUp = (message: string) => {
     if (projectId) {
@@ -104,7 +103,14 @@ const EditorPage = () => {
                   ))}
                 </div>
               ) : (
-                <p className="text-muted-foreground text-sm animate-pulse">Waiting for agent to respond...</p>
+                <div className="flex flex-col items-center justify-center h-full text-center">
+                  <p className="text-muted-foreground mb-2">No messages yet</p>
+                  <p className="text-sm text-muted-foreground max-w-md">
+                    {initialPrompt 
+                      ? "Agent is processing your initial request..." 
+                      : "Send a message to continue working on this project."}
+                  </p>
+                </div>
               )}
             </div>
             <ChatInput onSend={handleFollowUp} disabled={!projectId} />
