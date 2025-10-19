@@ -5,7 +5,7 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
       <div className="text-center text-white">
         <h1 className="text-7xl font-bold mb-6 bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
-          Dira-Tak-Builder
+          OpenLovable
         </h1>
         
         <p className="text-2xl mb-16 text-gray-300">

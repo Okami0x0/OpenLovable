@@ -1,6 +1,5 @@
 import { useLocation, useParams } from "react-router-dom";
 import { useAgentStream } from "@/hooks/useAgentStream";
-import { useFollowUpStream } from "@/hooks/useFollowUpStream";
 import { useProjectStore, AgentMessage } from "@/store/projectStore";
 import {
   ResizablePanel,
@@ -23,7 +22,6 @@ import { Code, Eye, AlertTriangle, MessageSquare, Cog } from "lucide-react";
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import { LivePreview } from "@/components/LivePreview";
-import { ChatInput } from "@/components/ChatInput";
 
 // This component is correct and has no issues.
 const MissingPromptNotice = () => (
@@ -67,9 +65,6 @@ const EditorPage = () => {
   const filesMap = useProjectStore((state) => state.files);
   const files = Array.from(filesMap.values());
 
-  // Follow-up stream hook
-  const { sendFollowUp } = useFollowUpStream();
-
   // Pass BOTH the initialPrompt and the projectId to the hook.
   // The hook will now have everything it needs to start the stream.
   useAgentStream(initialPrompt, projectId);
@@ -78,36 +73,27 @@ const EditorPage = () => {
     return <MissingPromptNotice />;
   }
 
-  const handleFollowUp = (message: string) => {
-    if (projectId) {
-      sendFollowUp(message, projectId);
-    }
-  };
-
   return (
     <div className="flex flex-col h-screen bg-secondary/40">
       <header className="p-3 border-b flex justify-between items-center bg-background shrink-0">
         <div className="flex items-center gap-2">
           <div className="w-6 h-6 bg-gradient-to-br from-primary to-secondary rounded-md"></div>
-          <span className="font-semibold">Dira-Tak-Builder / {projectId}</span>
+          <span className="font-semibold">OpenLovable / {projectId}</span>
         </div>
       </header>
 
       <ResizablePanelGroup direction="horizontal" className="flex-grow">
         <ResizablePanel defaultSize={40} minSize={25}>
-          <div className="h-full flex flex-col">
-            <div className="p-4 overflow-y-auto flex-grow">
-              {messages.length > 0 ? (
-                <div className="space-y-4">
-                  {messages.map((msg, index) => (
-                    <AgentMessageBlock message={msg} key={index} />
-                  ))}
-                </div>
-              ) : (
-                <p className="text-muted-foreground text-sm animate-pulse">Waiting for agent to respond...</p>
-              )}
-            </div>
-            <ChatInput onSend={handleFollowUp} disabled={!projectId} />
+          <div className="h-full p-4 overflow-y-auto">
+            {messages.length > 0 ? (
+              <div className="space-y-4">
+                {messages.map((msg, index) => (
+                  <AgentMessageBlock message={msg} key={index} />
+                ))}
+              </div>
+            ) : (
+              <p className="text-muted-foreground text-sm animate-pulse">Waiting for agent to respond...</p>
+            )}
           </div>
         </ResizablePanel>
 

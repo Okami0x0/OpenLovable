@@ -110,7 +110,7 @@ const IndexPage = () => {
           <div className="mt-2">
             Build something{' '}
             <span className="bg-gradient-to-br from-primary to-secondary bg-clip-text text-transparent">
-              Dira-Tak-Builder
+              OpenLovable
             </span>
           </div>
         </h1>

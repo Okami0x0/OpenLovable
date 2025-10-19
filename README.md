@@ -1,8 +1,8 @@
-# 🚀 Open Lovable
+# 🚀 Dira-Tak-Builder
 
 **Build something lovable, just by talking to it.**
 
-Open Lovable is an open-source, AI-driven web application builder. It's a "no-code" tool with a conversational interface, allowing you to describe the application you want to build, and watch as an AI agent writes the code, sets up the files, and brings your vision to life in real time.
+Dira-Tak-Builder is an open-source, AI-driven web application builder. It's a "no-code" tool with a conversational interface, allowing you to describe the application you want to build, and watch as an AI agent writes the code, sets up the files, and brings your vision to life in real time.
 
 ## 📸 Demo Screenshots
 
@@ -20,13 +20,13 @@ Open Lovable is an open-source, AI-driven web application builder. It's a "no-co
 
 ## ✨ Vision
 
-The goal of Open Lovable is to dramatically accelerate the software development process. Instead of manually writing boilerplate, setting up components, and wrestling with CSS, you can act as the architect. You provide the high-level vision through prompts, and the Lovable Agent acts as your expert full-stack developer, handling the implementation details.
+The goal of Dira-Tak-Builder is to dramatically accelerate the software development process. Instead of manually writing boilerplate, setting up components, and wrestling with CSS, you can act as the architect. You provide the high-level vision through prompts, and the Lovable Agent acts as your expert full-stack developer, handling the implementation details.
 
 This project is built on the belief that AI should be a collaborative partner in creation, making development more accessible, faster, and more fun.
 
 ## 🛠️ How It Works
 
-Open Lovable combines a frontend built with Vite and React with a backend powered by Bun and ElysiaJS.
+Dira-Tak-Builder combines a frontend built with Vite and React with a backend powered by Bun and ElysiaJS.
 
 1.  **Prompt:** You describe what you want to build on the homepage (e.g., "a beautiful todo application").
 2.  **Project Setup:** The backend instantly scaffolds a new React + TypeScript + Tailwind project for you in a sandboxed folder.
@@ -47,7 +47,7 @@ Open Lovable combines a frontend built with Vite and React with a backend powere
 
 ## 🚀 Getting Started
 
-Follow these steps to get Open Lovable running on your local machine.
+Follow these steps to get Dira-Tak-Builder running on your local machine.
 
 ### Prerequisites
 
@@ -59,8 +59,8 @@ Follow these steps to get Open Lovable running on your local machine.
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/your-username/openlovable.git
-    cd openlovable
+    git clone https://github.com/your-username/Dira-Tak-Builder.git
+    cd Dira-Tak-Builder
     ```
 
 2.  **Install dependencies:**
@@ -82,7 +82,7 @@ Follow these steps to get Open Lovable running on your local machine.
     ```
 
 5.  **Open your browser:**
-    -   Navigate to `http://localhost:8080` (or whatever port Vite announces). You should see the Open Lovable homepage.
+    -   Navigate to `http://localhost:8080` (or whatever port Vite announces). You should see the Dira-Tak-Builder homepage.
 
 ## ✨ Features
 
@@ -96,7 +96,7 @@ Follow these steps to get Open Lovable running on your local machine.
 
 ## 🗺️ Project Roadmap
 
-Open Lovable is actively being developed. Here are some of the features and improvements planned:
+Dira-Tak-Builder is actively being developed. Here are some of the features and improvements planned:
 
 -   [x] **Live Preview:** An `<iframe>` panel that shows a real-time, sandboxed preview of the generated application as the code is written.
 -   [ ] **Interactive Editing:** Allow users to click on elements in the preview to inspect and modify their properties.

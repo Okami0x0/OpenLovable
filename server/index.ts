@@ -1,6 +1,6 @@
 import { Elysia, t } from 'elysia';
 import { cors } from '@elysiajs/cors';
-import { generateResponse } from './gemini';
+import { generateResponse, generateFollowUpResponse } from './gemini';
 import fs from 'fs/promises';
 import path from 'path';
 import type { ChildProcess } from 'child_process';
@@ -61,11 +61,11 @@ const app = new Elysia()
   
   .post('/api/generate', async ({ body }) => { 
     console.log("Generate API called");
-    const { prompt } = body;
+    const { prompt, projectId } = body; // Accept optional projectId for conversation continuity
     
     const stream = new ReadableStream({
       start(controller) {
-        generateResponse(prompt, controller);
+        generateResponse(prompt, controller, projectId || undefined);
       }
     });
 
@@ -77,7 +77,38 @@ const app = new Elysia()
       },
     });
   }, {
-    body: t.Object({ prompt: t.String() })
+    body: t.Object({ prompt: t.String(), projectId: t.Optional(t.String()) })
+  })
+
+  .post('/api/follow-up', async ({ body }) => {
+    console.log("Follow-up API called");
+    const { prompt, projectId } = body;
+    
+    if (!projectId) {
+      return new Response(JSON.stringify({ error: 'Project ID is required for follow-up prompts.' }), { 
+        status: 400,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+    
+    const stream = new ReadableStream({
+      start(controller) {
+        generateFollowUpResponse(prompt, controller, projectId);
+      }
+    });
+
+    return new Response(stream, {
+      headers: {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive',
+      },
+    });
+  }, {
+    body: t.Object({ 
+      prompt: t.String(),
+      projectId: t.String()
+    })
   })
 
   .get('/api/projects', async () => {
