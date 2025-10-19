@@ -57,7 +57,7 @@ const app = new Elysia()
     methods: ['GET', 'POST', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
   }))
-  .get('/', () => 'Open Lovable Server is running')
+  .get('/', () => 'Dira-Tak-Builder Server is running')
   
   .post('/api/generate', async ({ body }) => { 
     console.log("Generate API called");
@@ -253,4 +253,4 @@ const app = new Elysia()
 
   .listen(3002);
 
-console.log(`🦊 Open Lovable server is running at ${app.server?.hostname}:${app.server?.port}`);
+console.log(`🦊 Dira-Tak-Builder server is running at ${app.server?.hostname}:${app.server?.port}`);
