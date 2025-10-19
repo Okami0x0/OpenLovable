@@ -32,7 +32,7 @@
 --radius: 0.75rem; /* Slightly larger radius for a modern feel */
 
 /* Custom Brand Colors */
---brand-primary: 262.1 83.3% 57.8%; /* Vibrant Purple */
+--brand-primary: 220 5% 10%; /* Dark Gray/Black */
 --brand-accent: 312.1 83.3% 57.8%; /* Bright Pink */
 }
 .dark {

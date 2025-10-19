@@ -15,7 +15,7 @@ const Header = () => (
   <header className="absolute top-0 left-0 right-0 p-4">
     <div className="container mx-auto flex justify-start items-center">
       <div className="flex items-center gap-2">
-        <span className="text-xl font-bold">Dira-Tak-Builder</span>
+        <span className="text-xl font-bold">Open Lovable</span>
       </div>
     </div>
   </header>
