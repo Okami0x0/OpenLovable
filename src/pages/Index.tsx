@@ -24,9 +24,25 @@ const PromptInput = ({ onProjectCreate }: { onProjectCreate: () => void }) => {
   const handleSubmit = async () => {
     if (!prompt.trim() || isLoading) return;
     setIsLoading(true);
-    const projectId = uuidv4();
-
+    
     try {
+      // First, ask the AI to generate a project name based on the prompt
+      const nameResponse = await axios.post('http://localhost:3002/api/generate-project-name', {
+        prompt
+      });
+      
+      let projectName = nameResponse.data.name || 'project';
+      // Sanitize the project name to be URL-friendly
+      projectName = projectName
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, '')  // Remove special characters
+        .replace(/\s+/g, '-')          // Replace spaces with hyphens
+        .replace(/-+/g, '-')           // Replace multiple hyphens with single
+        .trim('-');                    // Remove leading/trailing hyphens
+      
+      // Generate a unique project ID
+      const projectId = `${projectName}-${uuidv4().split('-')[0]}`;
+
       await axios.post('http://localhost:3002/api/create-project', {
         projectId,
         prompt,

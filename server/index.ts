@@ -1,6 +1,7 @@
 import { Elysia, t } from 'elysia';
 import { cors } from '@elysiajs/cors';
 import { generateResponse, generateFollowUpResponse } from './gemini';
+import { generateProjectName } from './gemini';
 import fs from 'fs/promises';
 import path from 'path';
 import type { ChildProcess } from 'child_process';
@@ -249,6 +250,21 @@ const app = new Elysia()
         newPath: t.Optional(t.String()),
       })
     })
+  })
+
+  .post('/api/generate-project-name', async ({ body }) => {
+    const { prompt } = body;
+    
+    try {
+      const projectName = await generateProjectName(prompt);
+      return { name: projectName };
+    } catch (error) {
+      console.error("Error generating project name:", error);
+      // Return a fallback name if AI generation fails
+      return { name: "project-" + Date.now().toString().slice(-6) };
+    }
+  }, {
+    body: t.Object({ prompt: t.String() })
   })
 
   .listen(3002);

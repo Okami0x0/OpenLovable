@@ -156,3 +156,26 @@ async function getSystemPrompt(): Promise<string> {
     return "You are an expert full-stack software engineer.";
   }
 }
+
+export async function generateProjectName(prompt: string): Promise<string> {
+  try {
+    const genAI = new GoogleGenerativeAI(apiKey);
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" }); // Using faster model for quick naming
+    
+    const namePrompt = `Based on this project description, generate a short, descriptive project name (1-3 words, no special characters). Only respond with the name, nothing else. If the project is unclear, respond with 'project': ${prompt}`;
+    const result = await model.generateContent(namePrompt);
+    const response = await result.response;
+    let projectName = response.text().trim();
+    
+    // Fallback if AI doesn't return a proper name
+    if (!projectName || projectName.length > 30 || projectName === "project") {
+      projectName = "project-" + Date.now().toString().slice(-6);
+    }
+    
+    return projectName;
+  } catch (error) {
+    console.error("Error generating project name:", error);
+    // Return a fallback name if AI generation fails
+    return "project-" + Date.now().toString().slice(-6);
+  }
+}
