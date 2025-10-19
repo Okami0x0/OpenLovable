@@ -10,7 +10,7 @@ import axios, { isAxiosError } from 'axios';
 import { useProjects, Project } from "@/hooks/useProjects";
 import { formatDistanceToNow } from 'date-fns';
 import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
-import { ProjectsSidebar } from "@/components/ProjectsSidebar";
+import { ProjectSidebar } from "@/components/ProjectSidebar";
 
 
 
@@ -113,7 +113,7 @@ const IndexPage = () => {
 
   return (
     <SidebarProvider>
-      <ProjectsSidebar />
+      <ProjectSidebar />
       <SidebarInset>
         <div className="min-h-screen w-full overflow-hidden">
           <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background px-4">
